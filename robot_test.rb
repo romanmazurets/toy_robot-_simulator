@@ -6,10 +6,6 @@ class TestRobot < Minitest::Test
     @robot = Robot.new
   end
 
-  def test_hello
-    assert_equal "robot", @robot.hello
-  end
-
   def test_place
     @robot.place(1, 2, :west)
     assert_equal @robot.x, 1
@@ -26,8 +22,8 @@ class TestRobot < Minitest::Test
 
   def test_place_with_wrong_position
     @robot.place(5, 6, :west)
-    assert_equal @robot.x, 0
-    assert_equal @robot.y, 0
+    assert_nil @robot.x
+    assert_nil @robot.y
     assert_equal @robot.facing, :west
   end
 
@@ -37,7 +33,7 @@ class TestRobot < Minitest::Test
   end
 
   def test_move
-    @robot.place(f=:east)
+    @robot.place(0, 0, :east)
     @robot.move
     assert_equal @robot.report, {x:1, y:0, facing: :east}
   end
@@ -60,4 +56,7 @@ class TestRobot < Minitest::Test
     assert_equal @robot.facing, :north
   end
 
+  def test_action_on_noplaced_robot
+    assert_nil @robot.report
+  end
 end
